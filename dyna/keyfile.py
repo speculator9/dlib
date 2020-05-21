@@ -1,8 +1,6 @@
-# path = r'E:\Github\dlib\test\check.k'
 from typing import List
 
 from dyna.funcs import *
-
 
 class KeyFile(object):
     keydata: List[str]
@@ -60,11 +58,9 @@ class KeyFile(object):
                 out.extend( self.dataop[key][0])
 
             else:
-                count = 0
                 for num in range(0, self.duplicate_cards[key]):
                     out.append(key)
-                    out.extend(self.dataop[key][count])
-                    count+=1
+                    out.extend(self.dataop[key][num])
 
         out.append('*END')
 
