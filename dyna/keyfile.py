@@ -1,10 +1,22 @@
-path = r'E:\Github\dlib\test\check.k'
+# path = r'E:\Github\dlib\test\check.k'
+from typing import List
 
-# from
+from dyna.funcs import *
+
+
 class KeyFile(object):
+    keydata: List[str]
 
     def __init__(self, path):
         self.path = path
+        self.keydata = self._keydata
+
+    @property
+    def _keydata(self):
+        """Hidden method returns the data in text file as list of lines"""
+        with open(self.path) as file:
+            data = file.read().splitlines()
+        return data
 
     @property
     def cards(self):
@@ -18,18 +30,52 @@ class KeyFile(object):
         return crds
 
     @property
-    def keydata(self):
-        """Method returns the data in text file as list of lines"""
-        with open(path) as file:
-            data = file.readlines()
-        return data
+    def duplicate_cards(self):
+        dup_cards = dict()
+        for card in set(self.cards):
+            count = self.cards.count(card)
+            if count > 1:
+                dup_cards[card] = count
+
+        return dup_cards
 
     @property
-    def nnodes(self):
+    def dataop(self):
+        dic = dict()
+        for key in set(self.cards):
+            dic[key] = find_key(self.keydata, key)
 
-        pass
+        return dic
 
 
-if __name__ =='__main__':
-    c = KeyFile( r'E:\Github\dlib\test\check.k')
-    print(c.cards)
+    def out_data(self):
+        deck_keys = ['*KEYWORD', '*END']
+        out = []
+
+        out.append('*KEYWORD')
+        for key in list(set(self.cards) - set(deck_keys)):
+
+            if key not in self.duplicate_cards.keys():
+                out.append(key)
+                out.extend( self.dataop[key][0])
+
+            else:
+                count = 0
+                for num in range(0, self.duplicate_cards[key]):
+                    out.append(key)
+                    out.extend(self.dataop[key][count])
+                    count+=1
+
+        out.append('*END')
+
+        return out
+
+    def save(self, path=r'E:\Github\dlib\test', name=r'\savecheck.k'):
+        with open(path + name, 'w+') as file:
+            for line in self.out_data():
+                file.write(f"{line}\n")
+
+if __name__ == '__main__':
+    c = KeyFile(r'E:\Github\dlib\test\check.k')
+    c.duplicate_cards
+    c.save()
