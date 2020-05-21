@@ -1,6 +1,6 @@
 def find_key(file: list, key: str):
-    """Function returns the start and end of the Keyword ass tuple in num list
-    1. file: list of output of f.readlines()
+    """Function returns the list of the lines for each key card
+    1. file: list of output of f.read().splitlines()
     2. key: str of key
     """
     # define empty list for tuples of start and end
