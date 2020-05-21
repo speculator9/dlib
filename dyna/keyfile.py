@@ -1,7 +1,7 @@
 from typing import List
 
 from dyna.funcs import *
-
+from dyna.kw import *
 class KeyFile(object):
     keydata: List[str]
 
@@ -45,6 +45,15 @@ class KeyFile(object):
 
         return dic
 
+    @property
+    def cardobject(self):
+        dic = dict()
+
+        for key in self.dataop:
+            dic[key] = KeyWd(key, self.dataop[key])
+
+        return dic
+
 
     def out_data(self):
         deck_keys = ['*KEYWORD', '*END']
@@ -73,5 +82,5 @@ class KeyFile(object):
 
 if __name__ == '__main__':
     c = KeyFile(r'E:\Github\dlib\test\check.k')
-    c.duplicate_cards
-    c.save()
+    # c.duplicate_cards
+    # c.save()
