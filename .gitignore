@@ -1,3 +1,4 @@
 bin/
 .idea
 .git
+test/
