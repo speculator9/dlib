@@ -18,7 +18,7 @@ def find_key(file: list, key: str):
 
             # loop over slice
             for line_num_, line_ in enumerate(slice):
-                # if * is in the slice means start of new keyword
+                # if * is in the slice means start of new dyna
                 if "*" not in line_:
                     num.append(line_num + line_num_ + 1)
                 else:
